@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
 from .models import *
 
 def Login(request):
@@ -55,3 +57,41 @@ def Participant_signup(request):
         return render(request, 'signup.html')
 
     return render(request, 'signup.html')
+
+def Organiser_signin(request):
+    if request.method == 'POST':
+        email = request.POST.get('email_org')
+        password = request.POST.get('password_org')
+        try:
+            organiser = Organiser.objects.get(email_id=email)
+            
+            if password==organiser.password:
+            # Password is correct
+                return render(request, 'org_index.html', {'app_name': 'Organiser_Main'})
+            else:
+            # Invalid password
+                return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+        except Organiser.DoesNotExist:
+        # Organiser with the given email doesn't exist
+            return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+
+    return render(request, 'login.html')
+
+def Participant_signin(request):
+    if request.method == 'POST':
+        email = request.POST.get('email_par')
+        password = request.POST.get('password_par')
+        try:
+            participant = Participant.objects.get(email_id=email)
+            
+            if password==participant.password:
+            # Password is correct
+                return render(request, 'par_index.html', {'app_name': 'Participant_Main'})
+            else:
+            # Invalid password
+                return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+        except Participant.DoesNotExist:
+        # Organiser with the given email doesn't exist
+            return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+
+    return render(request, 'login.html')
