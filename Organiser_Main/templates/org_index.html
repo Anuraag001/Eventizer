@@ -1,18 +1,240 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organiser</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>Document</title>
 </head>
 <body>
     <style>
         body{
             background-color: lightblue;
         }
+
+        #Organiser_main{
+            display: flex;
+            flex-direction: row;
+            margin: 10px 0px 10px 0px;
+        }
+
+        #left{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex:0 0 15%;
+            width: 15%;
+            background-color: lightcoral;
+        }
+
+        #middle{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex: 0 0 75%;
+            width:75%;
+            row-gap: 20px;
+        }
+
+        #new_event_button{
+            font-size: 200%;
+            background-color: blanchedalmond;
+            border-radius: 5px;
+            padding-left: 20px;
+        }
+
+        #past_events{
+            display: flex;
+            flex-direction: column;
+            column-gap: 5px;
+            background-color: blanchedalmond;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        #future_events{
+            display: flex;
+            flex-direction: column;
+            column-gap: 5px;
+            background-color: blanchedalmond;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        #head_title{
+            font-size: large;
+            font-weight: bold;
+        }
+
+        #showing_events{
+            margin:20px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            column-gap: 70px;
+            row-gap:20px;
+        }
+
+        .green{
+            color:green;
+        }
+
+        .red{
+            color:red;
+        }
+
+        #footer{
+            padding: 20px;
+            background-color:beige;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 300%;
+            row-gap: 15px;
+        }
+
+        #links_footer{
+            display: flex;
+            flex-direction: row;
+            column-gap: 50px;
+            font-size: medium;
+
+        }
+
+        #links_footer a{
+            text-decoration: none;
+        }
+
+        #media_footer{
+          display: flex;
+          flex-direction: row;
+          column-gap: 20px;
+          font-size: large;
+        }
+
+        #font-icon{
+          font-size: large;
+        }
     </style>
-    Welocme to Organisers main page
-    <h1>You did it!!!</h1>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="bi bi-calendar-event-fill"></i> Eventizer</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link ">Disabled</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div id="Organiser_main">
+        <div id="left">
+
+        </div>
+        <div id="middle">
+            <div id="new_event_button"><a href="{% url 'new_event' %}" style="color:black"><i class="bi bi-plus-square-fill"></i></a> Add Event</div>
+            <div id="future_events">
+                <div id="head_title">Upcoming events organizing</div>
+                    <div id="showing_events">
+                        {% for event in events %}
+                        <div class="card" style="width: 18rem;height: fit-content;">
+                          <img src="{{ event.event_picture.url }}" class="card-img-top" alt="..." height="fit-content">
+                          <div class="card-body">
+                            <h5 class="card-title" style="text-align: center;">{{event.event_name}}</h5>
+                            
+                            <p class="card-text green"><i class="bi bi-calendar4-week" id="font-icon"></i>{{event.event_date}}</p>
+                            <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>{{event.event_date}}</p>
+                            
+                            <p class="card-text green"><i class="bi bi-people-fill" id="font-icon"></i>{{event.event_present_participants}}/{{event.event_max_participants}}</p>
+                            <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+
+                    <div id="past_events">
+                        <div id="head_title">Past Events Organised</div>
+                            <div id="showing_events">
+                                <div class="card" style="width: 18rem;height: fit-content;">
+                                  <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
+                                  <div class="card-body">
+                                    <h5 class="card-title" style="text-align: center;">Event Name</h5>
+                                    
+                                    <p class="card-text red"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
+                                    <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
+                                    
+                                    <p class="card-text "><i class="bi bi-people-fill" id="font-icon"></i>  21/25</p>
+                                    <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
+                                  </div>
+                                </div>
+                        
+                                <div class="card" style="width: 18rem;height: fit-content;">
+                                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                      <h5 class="card-title" style="text-align: center;">Event Name</h5>
+                                      
+                                      <p class="card-text red"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
+                                      <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
+                                      
+                                      <p class="card-text "><i class="bi bi-people-fill" id="font-icon"></i>  21/25</p>
+                                      <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
+                                    </div>
+                                  </div>
+        
+                                  <div class="card" style="width: 18rem;height: fit-content;">
+                                    <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                      <h5 class="card-title" style="text-align: center;">Event Name</h5>
+                                      
+                                      <p class="card-text red"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
+                                      <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
+                                      
+                                      <p class="card-text "><i class="bi bi-people-fill" id="font-icon"></i>  21/25</p>
+                                      <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
+                                    </div>
+                                  </div>
+                        
+                              </div>
+                            </div>
+            </div>
+        </div>
+
+      </div>
+    <div id="footer">
+        <div id="name_footer"><i class="bi bi-calendar-event-fill"></i>Eventizer</div>
+        <div id="links_footer">
+            <a href="#">Home</a>
+            <a href="#">Login</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
+        <div id="media_footer">
+          <div><a href=""><i class="bi bi-github" style="color:grey"></i></a></div>
+          <div><a href=""><i class="bi bi-twitter"></i></a></div>
+          <div><a href=""><i class="bi bi-instagram" style="color:pink"></i></a></div>
+          <div><a href=""><i class="bi bi-facebook"></i></a></div>
+      </div>
+      
+    </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
 </body>
 </html>
