@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 from .models import *
 from Organiser_Main.models import *
+from Participant_Main.models import *
 
 def Login(request):
     return render(request, 'login.html')
@@ -17,6 +18,7 @@ def Organiser_signup(request):
         last_name = request.POST['last_name_org']
         email = request.POST['email_org']
         password = request.POST['password_org']
+        contact=request.POST['contact_org']
         confirm_password = request.POST['confirmpassword_org']
         profile_picture = request.FILES.get('profile_picture_org')
 
@@ -26,6 +28,7 @@ def Organiser_signup(request):
                 last_name=last_name,
                 email_id=email,
                 password=password,
+                contact=contact,
                 profile_picture=profile_picture,
             )
             organiser.save()
@@ -62,6 +65,7 @@ def Participant_signup(request):
         email = request.POST['email_par']
         password = request.POST['password_par']
         confirm_password = request.POST['confirmpassword_par']
+        contact=request.POST['contact_par']
         profile_picture = request.FILES.get('profile_picture_par')
 
         if password == confirm_password:
@@ -70,6 +74,7 @@ def Participant_signup(request):
                 last_name=last_name,
                 email_id=email,
                 password=password,
+                contact=contact,
                 profile_picture=profile_picture,
             )
             participant.save()
@@ -90,7 +95,7 @@ def Participant_signin(request):
             
             if password==participant.password:
             # Password is correct
-                return render(request, 'par_index.html', {'app_name': 'Participant_Main','events':events})
+                return redirect('participant_main', participant=participant.id)
             else:
             # Invalid password
                 return render(request, 'login.html', {'error_message': 'Invalid email or password'})

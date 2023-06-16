@@ -17,6 +17,7 @@ urlpatterns = [
     path('new_event/<int:organizer>/', create_event, name='new_event'),
     path('organiser_main/<int:organizer>/', organiser_main, name='organiser_main'),
     path('Organiser/', organiser_main, name='organiser_main'),
-    path('Participant/', participant_main, name='participant_main'),
+    path('Participant/<int:participant>/', participant_main, name='participant_main'),
+    path('participant_event/<int:participant>/register/<int:organiser_event>/',participant_event,name='participant_event'),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

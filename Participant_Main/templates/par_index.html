@@ -111,9 +111,9 @@
             <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>{{event.organizer}}</p>
             <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>{{event.event_date}}</p>
             <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i> {{event.event_location}}</p>
-            <p class="card-text"><i class="bi bi-telephone-fill"></i>{{event.organizer}}</p>
+            <p class="card-text"><i class="bi bi-telephone-fill"></i> {{event.organizer.contact}}</p>
             <p class="card-text green"><i class="bi bi-people-fill" id="font-icon"></i>{{event.event_present_participants}}/{{event.event_max_participants}}</p>
-            <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
+            <center><a href="{% url 'participant_event' participant=participant organiser_event=event.id %}" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
           </div>
         
         </div>
