@@ -1,13 +1,18 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 
 # Create your views here.
-def organiser_main(request):
-    future_events = Organiser_events.objects.all()
-    return render(request, 'org_index.html', {'events': future_events})
+def organiser_main(request, organizer):
+    future_events = Organiser_events.objects.filter(organizer=organizer)
+    context = {
+        'organizer': organizer,
+        'events': future_events,
+    }
+    return render(request, 'org_index.html', context)
 
-def create_event(request):
+
+def create_event(request, organizer):
     if request.method == 'POST':
         name = request.POST['event_name']
         description = request.POST['event_description']
@@ -16,7 +21,10 @@ def create_event(request):
         picture = request.FILES['event_picture']
         max_participants = request.POST['max_participants']
 
+        organiser_instance = Organiser.objects.get(id=organizer)
+        
         event = Organiser_events(
+            organizer=organiser_instance,
             event_name=name,
             event_description=description,
             event_date=date_and_time,
@@ -27,7 +35,6 @@ def create_event(request):
         )
         event.save()
 
-        # Redirect to the organiser_main view to display the updated list of events
-        return redirect('organiser_main')
-
-    return render(request, 'new_org_event.html')
+        return redirect('organiser_main', organizer=organizer)
+    
+    return render(request, 'new_org_event.html', {'organizer': organizer})

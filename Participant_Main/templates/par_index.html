@@ -103,83 +103,21 @@
       <div id="participant_full_view">
         <div id="filter"></div>
       <div id="showing_events">
+        {% for event in events %}
         <div class="card" style="width: 18rem;">
-          <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
+          <img src="{{ event.event_picture.url }}" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title" style="text-align: center;">Event Name</h5>
-            <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>  Anuraag</p>
-            <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
-            <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
-            <p class="card-text"><i class="bi bi-telephone-fill"></i> 998723131</p>
-            <p class="card-text green"><i class="bi bi-people-fill" id="font-icon"></i>  21/25</p>
+            <h5 class="card-title" style="text-align: center;">{{event.event_name}}</h5>
+            <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>{{event.organizer}}</p>
+            <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>{{event.event_date}}</p>
+            <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i> {{event.event_location}}</p>
+            <p class="card-text"><i class="bi bi-telephone-fill"></i>{{event.organizer}}</p>
+            <p class="card-text green"><i class="bi bi-people-fill" id="font-icon"></i>{{event.event_present_participants}}/{{event.event_max_participants}}</p>
             <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
           </div>
+        
         </div>
-
-          <div class="card" style="width: 18rem;">
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title" style="text-align: center;">Event Name</h5>
-              <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>  Anuraag</p>
-              <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
-              <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
-              <p class="card-text"><i class="bi bi-telephone-fill"></i> 998723131</p>
-              <p class="card-text green"><i class="bi bi-people-fill" id="font-icon"></i>  20/25</p>
-              <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title" style="text-align: center;">Event Name</h5>
-              <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>  Anuraag</p>
-              <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
-              <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
-              <p class="card-text"><i class="bi bi-telephone-fill"></i> 998723131</p>
-              <p class="card-text red"><i class="bi bi-people-fill" id="font-icon"></i>  25/25</p>
-              <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title" style="text-align: center;">Event Name</h5>
-              <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>  Anuraag</p>
-              <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
-              <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
-              <p class="card-text"><i class="bi bi-telephone-fill"></i> 998723131</p>
-              <p class="card-text green"><i class="bi bi-people-fill" id="font-icon"></i>  23/25</p>
-              <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title" style="text-align: center;">Event Name</h5>
-              <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>  Anuraag</p>
-              <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
-              <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
-              <p class="card-text"><i class="bi bi-telephone-fill"></i> 998723131</p>
-              <p class="card-text red"><i class="bi bi-people-fill" id="font-icon"></i>  25/25</p>
-              <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem;">
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title" style="text-align: center;">Event Name</h5>
-              <p class="card-text"><i class="bi bi-person-circle" id="font-icon"></i>  Anuraag</p>
-              <p class="card-text"><i class="bi bi-calendar4-week" id="font-icon"></i>  23-05-23 12:30 PM</p>
-              <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>  Banglore</p>
-              <p class="card-text"><i class="bi bi-telephone-fill"></i> 998723131</p>
-              <p class="card-text red"><i class="bi bi-people-fill" id="font-icon"></i>  25/25</p>
-              <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
-            </div>
-          </div>
+        {% endfor %}
       </div>
     </div>
     <div id="footer">

@@ -2,6 +2,7 @@ from django.db import models
 from User.models import Organiser
 # Create your models here.
 class Organiser_events(models.Model):
+    organizer = models.ForeignKey(Organiser, on_delete=models.CASCADE,default=1)
     event_name = models.CharField(max_length=100)
     event_description = models.CharField(max_length=500)
     event_date = models.DateTimeField()
