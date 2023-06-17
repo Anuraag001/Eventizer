@@ -1,11 +1,22 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from Organiser_Main.models import *
+from Organiser_Main.models import Organiser_events
 
 def participant_main(request, participant):
     events = Organiser_events.objects.all()
     return render(request, 'par_index.html', {'participant': participant, 'events': events})
 
 def participant_event(request, participant, organiser_event):
-    events=Organiser_events.objects.get(id=organiser_event)
-    return render(request, 'view_event.html', {'participant': participant, 'event': events})
+    event = Organiser_events.objects.get(id=organiser_event)
+    is_registered = participant in event.participants.all()
+    participants = event.participants.all() 
+    if request.method == 'POST':
+        if 'unregister' in request.POST:
+            event.participants.remove(participant)
+            is_registered = False
+        else:
+            event.participants.add(participant)
+            is_registered = True
+
+        return render(request, 'view_event.html', {'participants': participants, 'event': event, 'is_registered': is_registered})
+
+    return render(request, 'view_event.html', {'participants': participants, 'event': event, 'is_registered': is_registered})
