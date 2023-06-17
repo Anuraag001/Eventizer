@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth import logout
 from .models import *
+from .models import Organiser_events
+
 
 # Create your views here.
 def organiser_main(request, organizer):
@@ -38,3 +41,18 @@ def create_event(request, organizer):
         return redirect('organiser_main', organizer=organizer)
     
     return render(request, 'new_org_event.html', {'organizer': organizer})
+
+def event_view_org(request,organiser,organiser_event):
+    event = Organiser_events.objects.get(id=organiser_event)
+    participants=event.participants.all()
+    if request.method=='POST':
+        participant_id=request.POST.get('Participant_id')
+        participant = event.participants.get(id=participant_id)
+        event.participants.remove(participant)
+        event.event_present_participants = participants.count()
+        event.save()
+    return render(request,'event_view.html',{'event':event,'organiser':organiser,'participants':participants})
+
+def logout_org(request):
+    logout(request)
+    return render(request, 'login.html')

@@ -15,6 +15,10 @@
             background-color: lightblue;
         }
 
+        #nav_bar{
+      background-color:lightgoldenrodyellow;
+    }
+
         #Organiser_main{
             display: flex;
             flex-direction: row;
@@ -88,7 +92,7 @@
 
         #footer{
             padding: 20px;
-            background-color:beige;
+            background-color:lightgoldenrodyellow;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -118,8 +122,16 @@
         #font-icon{
           font-size: large;
         }
+
+        .card {
+  transition: box-shadow 0.3s ease-in-out; 
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
     </style>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg custom-navbar" id="nav_bar">
         <div class="container-fluid">
           <a class="navbar-brand" href="#"><i class="bi bi-calendar-event-fill"></i> Eventizer</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,13 +143,13 @@
                 <a class="nav-link " aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="{% url 'new_event' organizer %}">Add Event</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" href="#">Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link ">Disabled</a>
+                <a class="nav-link" href="/logout">Log out</a>
               </li>
             </ul>
           </div>
@@ -159,10 +171,10 @@
                             <h5 class="card-title" style="text-align: center;">{{event.event_name}}</h5>
                             
                             <p class="card-text green"><i class="bi bi-calendar4-week" id="font-icon"></i>{{event.event_date}}</p>
-                            <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>{{event.event_date}}</p>
+                            <p class="card-text"><i class="bi bi-geo-alt-fill" id="font-icon"></i>{{event.event_location}}</p>
                             
                             <p class="card-text green"><i class="bi bi-people-fill" id="font-icon"></i>{{event.event_present_participants}}/{{event.event_max_participants}}</p>
-                            <center><a href="#" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
+                            <center><a href="{% url 'organiser_event_view' organiser=organizer organiser_event=event.id %}" class="btn btn-outline-primary" id="font-icon"><i class="bi bi-eye-fill"></i> View Event</a></center>
                           </div>
                         </div>
                         {% endfor %}

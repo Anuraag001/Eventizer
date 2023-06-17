@@ -16,6 +16,9 @@ def participant_event(request, participant, organiser_event):
         else:
             event.participants.add(participant)
             is_registered = True
+        
+        event.event_present_participants = participants.count()
+        event.save()
 
         return render(request, 'view_event.html', {'participants': participants, 'event': event, 'is_registered': is_registered})
 
