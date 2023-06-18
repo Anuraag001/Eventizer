@@ -8,7 +8,11 @@
     <title>Organiser Sign up</title>
 </head>
 <body>
-    
+    <style>
+      body{
+        background-color: lightblue;
+      }
+    </style>
     <div class="container">
         <h1>For Organiser:</h1>
         <form method="POST" action="/organiser_signup/">
@@ -26,12 +30,12 @@
             <input type="email" class="form-control" id="email_org" name="email_org" required>
           </div>
           <div class="form-group">
-            <label for="password_org">Password:</label>
-            <input type="password" class="form-control" id="password_org" name="password_org" required>
-          </div>
-          <div class="form-group">
             <label for="contact_org">Contact Number:</label>
             <input type="number" class="form-control" id="contact_org" name="contact_org" required>
+          </div>
+          <div class="form-group">
+            <label for="password_org">Password:</label>
+            <input type="password" class="form-control" id="password_org" name="password_org" required>
           </div>
           <div class="form-group">
             <label for="confirmpassword_org">Confirm Password:</label>

@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import logout
+from django.utils import timezone
 from .models import *
 from .models import Organiser_events
 
 
 # Create your views here.
 def organiser_main(request, organizer):
-    future_events = Organiser_events.objects.filter(organizer=organizer)
+    future_events = Organiser_events.objects.filter(organizer=organizer, event_date__gte=timezone.now())
+    past_events = Organiser_events.objects.filter(organizer=organizer, event_date__lt=timezone.now())
     context = {
         'organizer': organizer,
         'events': future_events,
+        'past_events':past_events,
     }
     return render(request, 'org_index.html', context)
 
@@ -56,3 +59,6 @@ def event_view_org(request,organiser,organiser_event):
 def logout_org(request):
     logout(request)
     return render(request, 'login.html')
+
+def organiser_profile(request,organizer):
+    return render(request,'org_profile.html',{'organizer':organizer})
