@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.utils import timezone
 from .models import *
 from .models import Organiser_events
+from User.models import *
 
 
 # Create your views here.
@@ -60,5 +61,29 @@ def logout_org(request):
     logout(request)
     return render(request, 'login.html')
 
-def organiser_profile(request,organizer):
-    return render(request,'org_profile.html',{'organizer':organizer})
+
+def organiser_profile(request, organizer):
+    organizer = Organiser.objects.get(id=organizer)
+
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email_id = request.POST['email']
+        contact = request.POST['contact']
+        profile_picture = request.FILES.get('profile_pic')
+
+        organizer.first_name = first_name
+        organizer.last_name = last_name
+        organizer.email_id = email_id
+        organizer.contact = contact
+
+        if profile_picture:
+            organizer.profile_picture = profile_picture
+
+        
+        organizer.save()
+
+        return redirect('organiser_profile', organizer=organizer.id)
+
+    return render(request, 'org_profile.html', {'organizer': organizer})
+
