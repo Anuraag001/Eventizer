@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
+from django.core.mail import send_mail
 from .models import *
 from Organiser_Main.models import *
 from Participant_Main.models import *
@@ -104,3 +105,32 @@ def Participant_signin(request):
             return render(request, 'login.html', {'error_message': 'Invalid email or password'})
 
     return render(request, 'login.html')
+
+def org_forgot(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+
+        organizer=Organiser.objects.get(email_id=email)
+        subject = 'Password Reset for eventizer website'
+        message = 'Please click the below link to reset password /reset_password/{{ organizer.id }}/'
+        from_email = 'eventizer.mail@gmail.com'
+        recipient_list = [email]
+        send_mail(subject, message, from_email, recipient_list)
+        return render(request,'reset_password_org.html',organizer=organizer.id)
+    return render(request,'forgot_password_org.html')
+
+def org_reset(request, organizer):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password != confirm_password:
+            return render(request, 'reset_password_org.html', {'organizer': organizer, 'error': 'Passwords do not match'})
+
+        organizer = Organiser.objects.get(id=organizer)
+        organizer.password = new_password
+        organizer.save()
+
+        return render(request, 'reset_password_org.html', {'organizer': organizer})
+
+    return render(request, 'reset_password_org.html', {'organizer': organizer})
